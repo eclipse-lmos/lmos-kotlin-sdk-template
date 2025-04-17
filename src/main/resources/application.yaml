@@ -1,0 +1,51 @@
+#
+# SPDX-FileCopyrightText: Robert Winkler
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+spring:
+  application:
+    name: chat-agent    # Service name for tracing (appears in Langfuse UI as the source service)
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0    # Sample 100% of requests for full tracing (adjust in production as needed)
+  observations:
+    annotations:
+      enabled: true       # Enable @Observed (if you use observation annotations in code)
+
+otel:
+  exporter:
+    otlp:
+      endpoint: http://localhost:4318
+    logging:
+      enabled: true
+  propagators:
+    - tracecontext
+  instrumentation:
+    micrometer:
+      enabled: true
+
+arc:
+  ai:
+    clients:
+      - id: GPT-4o
+        model-name: GPT35T-1106
+        api-key: 0c798e9b59c64f07ab35d0b1aee65d19
+        client: langchain4j-azure
+        url: https://gpt4-uk.openai.azure.com
+
+wot:
+  servient:
+    websocket:
+      server:
+        enabled: true
+        host: localhost
+        port: 8181
+    http:
+      server:
+        enabled: false
+        host: localhost
+        port: 9080
