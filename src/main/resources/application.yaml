@@ -37,6 +37,7 @@ arc:
         client: langchain4j-azure
         url: <your URL>
 
+
 wot:
   servient:
     websocket:

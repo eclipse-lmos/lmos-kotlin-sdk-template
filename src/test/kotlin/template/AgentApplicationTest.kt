@@ -11,7 +11,6 @@ import org.eclipse.lmos.sdk.agents.WotConversationalAgent
 import org.eclipse.lmos.sdk.agents.lastMessage
 import org.eclipse.lmos.sdk.agents.toAgentRequest
 import org.eclipse.thingweb.Wot
-import org.junit.jupiter.api.Disabled
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
