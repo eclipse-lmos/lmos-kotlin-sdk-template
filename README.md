@@ -6,8 +6,11 @@ This is a Gradle template project designed to quickly create an Agent based on t
 
 1. **Clone the Repository**: Clone this repository to your local machine.
 2. **Open in IDE**: Open the project in your favorite IDE (e.g., IntelliJ IDEA, VSCode).
-3. **Configure the Agent**: Modify the `src/main/resources/application.yml` file to configure the ARC client. 
-4. **Run the Agent**: After building, you can run the agent using the following command:
+3. **Configure the ARC Client**: Modify the `src/main/resources/application.yml` file to configure the ARC client. 
+4. **Configure the ARC Agent**: Modify AgentConfiguration in `src/main/kotlin/template/AgentConfiguration.kt` to set up the agent's configuration. 
+   - **Agent Prompt**: Configure the agent's prompt.
+   - **Agent Model**: Set the model to be used by the agent, which is configured in ``application.yml``.
+5. **Run the Agent**: After building, you can run the agent using the following command:
    ```bash
     ./gradlew bootRun
     ```

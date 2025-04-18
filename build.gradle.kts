@@ -1,4 +1,3 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.run.BootRun
 import java.net.URI
 
