@@ -35,7 +35,7 @@ dependencies {
     implementation("org.eclipse.thingweb:kotlin-wot-binding-websocket:0.1.0-SNAPSHOT")
     implementation("org.eclipse.lmos:lmos-kotlin-sdk-client:0.1.0-SNAPSHOT")
     implementation("org.eclipse.lmos:lmos-kotlin-sdk-server:0.1.0-SNAPSHOT")
-    implementation("org.eclipse.lmos:arc-spring-boot-starter:0.1.0-SNAPSHOT")
+    implementation("org.eclipse.lmos:arc-spring-boot-starter:0.122.0-M2")
 
     implementation("dev.langchain4j:langchain4j-azure-open-ai:1.0.0-beta1")
 
