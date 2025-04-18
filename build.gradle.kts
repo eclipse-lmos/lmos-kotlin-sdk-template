@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.run.BootRun
 import java.net.URI
 
@@ -6,6 +7,8 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("com.citi.helm") version "2.2.0"
+    id("com.citi.helm-publish") version "2.2.0"
 }
 
 group = "org.eclipse.lmos"
@@ -16,6 +19,7 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
 
 tasks.test {
     useJUnitPlatform()
@@ -76,6 +80,57 @@ tasks.named<BootRun>("bootRun") {
     systemProperty("otel.service.name", "chat-agent")
     //systemProperty("otel.javaagent.debug", "true")
 }
+
+fun getProperty(propertyName: String) = System.getenv(propertyName) ?: project.findProperty(propertyName) as String
+
+
+helm {
+    charts {
+        create("main") {
+            chartName.set("${project.name}-chart")
+            chartVersion.set("${project.version}")
+            sourceDir.set(file("src/main/helm"))
+        }
+    }
+}
+
+tasks.register("replaceChartVersion") {
+    doLast {
+        val chartFile = file("src/main/helm/Chart.yaml")
+        val content = chartFile.readText()
+        val updatedContent = content.replace("\${chartVersion}", "${project.version}")
+        chartFile.writeText(updatedContent)
+    }
+}
+
+tasks.register("helmPush") {
+    description = "Push Helm chart to OCI registry"
+    group = "helm"
+    dependsOn(tasks.named("helmPackageMainChart"))
+
+    doLast {
+        val registryUrl = getProperty("REGISTRY_URL")
+        val registryUsername = getProperty("REGISTRY_USERNAME")
+        val registryPassword = getProperty("REGISTRY_PASSWORD")
+        val registryNamespace = getProperty("REGISTRY_NAMESPACE")
+
+        helm.execHelm("registry", "login") {
+            option("-u", registryUsername)
+            option("-p", registryPassword)
+            args(registryUrl)
+        }
+
+        helm.execHelm("push") {
+            args(tasks.named("helmPackageMainChart").get().outputs.files.singleFile.toString())
+            args("oci://$registryUrl/$registryNamespace")
+        }
+
+        helm.execHelm("registry", "logout") {
+            args(registryUrl)
+        }
+    }
+}
+
 
 repositories {
     //mavenLocal()
