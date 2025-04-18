@@ -24,7 +24,7 @@ This is a Gradle template project designed to quickly create an Agent based on t
 ![img.png](img.png)
 
 10. **Create image**: You can create an image using the following command:
-    ```bash
+   ```bash
    ./gradlew bootBuildImage --imageName=lmos/lmos-kotlin-sdk-template:0.0.1-SNAPSHOT
-    ```
-    It will build an image called `docker.io/lmos/lmos-kotlin-sdk-template:0.0.1-SNAPSHOT`
+   ```
+   It will build an image called `docker.io/lmos/lmos-kotlin-sdk-template:0.0.1-SNAPSHOT`
