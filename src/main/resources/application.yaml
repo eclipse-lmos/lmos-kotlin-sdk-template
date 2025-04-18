@@ -33,10 +33,9 @@ arc:
     clients:
       - id: GPT-4o
         model-name: GPT35T-1106
-        api-key: <your key>
-        client: langchain4j-azure
-        url: <your URL>
-
+        api-key: ${AZURE_OPENAI_KEY}
+        client: azure
+        url: ${AZURE_OPENAI_URL}
 
 wot:
   servient:
